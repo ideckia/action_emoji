@@ -4,7 +4,7 @@ using api.IdeckiaApi;
 using StringTools;
 
 typedef Props = {
-	@:editable("Emojis server", "https://github.com/cheatsnake/emojihub")
+	@:editable("Emojis server", "https://emojihub.yurace.pro/api/random")
 	var emoji_server:String;
 	@:editable("Emojis size", 50)
 	var emoji_size:Int;
@@ -35,8 +35,12 @@ class Emoji extends IdeckiaAction {
 			http.addHeader("Content-type", "application/json");
 			http.onError = reject;
 			http.onData = (data) -> {
-				currentResponse = haxe.Json.parse(data);
-				resolve(showResponse(currentState));
+				try {
+					currentResponse = haxe.Json.parse(data);
+					resolve(showResponse(currentState));
+				} catch (e:haxe.Exception) {
+					reject(e);
+				}
 			};
 			http.request();
 		});
