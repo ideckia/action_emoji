@@ -24,19 +24,21 @@ class Emoji extends IdeckiaAction {
 	var initialTextSize:UInt;
 
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState> {
-		currentViewMode = image;
-		initialTextSize = initialState.textSize;
-		return execute(initialState);
+		return new js.lib.Promise((resolve, reject) -> {
+			currentViewMode = image;
+			initialTextSize = initialState.textSize;
+			execute(initialState).then(outcome -> resolve(outcome.state)).catchError(reject);
+		});
 	}
 
-	public function execute(currentState:ItemState):js.lib.Promise<ItemState> {
+	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
 		return new js.lib.Promise((resolve, reject) -> {
 			var http = new haxe.Http(props.emoji_server);
 			http.addHeader("Content-type", "application/json");
 			http.onError = reject;
 			http.onData = (data) -> {
 				currentResponse = haxe.Json.parse(data);
-				resolve(showResponse(currentState));
+				resolve(new ActionOutcome({state: showResponse(currentState)}));
 			};
 			http.request();
 		});
@@ -62,14 +64,14 @@ class Emoji extends IdeckiaAction {
 		return currentState;
 	}
 
-	override function onLongPress(currentState:ItemState):js.lib.Promise<ItemState> {
-		return new js.lib.Promise<ItemState>((resolve, reject) -> {
+	override function onLongPress(currentState:ItemState):js.lib.Promise<ActionOutcome> {
+		return new js.lib.Promise<ActionOutcome>((resolve, reject) -> {
 			currentViewMode = switch currentViewMode {
 				case image: name;
 				case name: unicode;
 				case unicode: image;
 			}
-			resolve(showResponse(currentState));
+			resolve(new ActionOutcome({state: showResponse(currentState)}));
 		});
 	}
 }
