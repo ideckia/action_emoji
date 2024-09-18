@@ -1,0 +1,14 @@
+[
+	{
+		"id": "action_description",
+		"text": "Show a random emoji every click"
+	},
+	{
+		"id": "prop_emoji_server",
+		"text": "Emojis server."
+	},
+	{
+		"id": "prop_emoji_size",
+		"text": "Emojis size."
+	}
+]

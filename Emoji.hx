@@ -4,9 +4,9 @@ using api.IdeckiaApi;
 using StringTools;
 
 typedef Props = {
-	@:editable("Emojis server", "https://github.com/cheatsnake/emojihub")
+	@:editable("prop_emoji_server", "https://github.com/cheatsnake/emojihub")
 	var emoji_server:String;
-	@:editable("Emojis size", 50)
+	@:editable("prop_emoji_size", 50)
 	var emoji_size:Int;
 }
 
@@ -17,7 +17,8 @@ enum ViewMode {
 }
 
 @:name("emoji")
-@:description("Show a random emoji every click")
+@:description("action_description")
+@:localize
 class Emoji extends IdeckiaAction {
 	var currentViewMode:ViewMode = image;
 	var currentResponse:Response;

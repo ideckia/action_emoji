@@ -1,0 +1,14 @@
+[
+	{
+		"id": "action_description",
+		"text": "Klik bakoitzean ausazko emoji bat erakutsi"
+	},
+	{
+		"id": "prop_emoji_server",
+		"text": "Emoji-en zerbitzaria."
+	},
+	{
+		"id": "prop_emoji_size",
+		"text": "Emoji-en neurria."
+	}
+]
